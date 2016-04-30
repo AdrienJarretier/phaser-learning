@@ -1,0 +1,23 @@
+{
+  "name": "phaser_learning",
+  "version": "1.0.0",
+  "description": "My first steps using the 2D game framework Phaser",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "will come"
+  },
+  "keywords": [
+    "2g",
+    "game",
+    "phaser"
+  ],
+  "author": "Jarretier Adrien <jarretier.adrien@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.13.4"
+  }
+}
