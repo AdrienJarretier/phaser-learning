@@ -27,8 +27,32 @@ function preload() {
 
 function create() {
 
+	// Enable the Arcade Physics system
+	game.physics.startSystem(Phaser.Physics.ARCADE);
+
 	game.add.sprite(0,0,'sky');
-	game.add.sprite(0,0,'star');
+
+	// This group will contain the ground and the 2 ledges we can jump on
+	var platforms = game.add.group();
+
+	// Enable physics for objects in this group
+	platforms.enableBody = true;
+
+	var ground = platforms.create(0, game.world.height - 64, 'ground');
+
+	// Scale to fit the width of the game (original sprite is 400x32)
+	ground.scale.setTo(2, 2);
+
+	// This stops the ground from falling away when you jump on it
+	ground.body.immovanle = true;
+
+	var ledge = platforms.create(400, 400, 'ground');
+
+	ledge.body.immovable = true;
+
+	ledge = platforms.create(-150, 250, 'ground');
+
+	ledge.body.immovable = true;
 
 }
 
