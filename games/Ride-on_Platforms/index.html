@@ -11,20 +11,35 @@
 
 		<script>
 
-			var game = new Phaser.Game(640, 480, Phaser.AUTO, '', { preload: preload, create: create, update: update });
+			var game = new Phaser.Game(640, 480, Phaser.AUTO);
 
-			function preload () {
+			var myGameState = {
 
-			}
+				player : null,
+				platforms : null,
+				facing : 'left',
+				jumpTimer : 0,
+				cursors : null,
 
-			function create () {
+				init : function () {
 
-			}
+				},
 
-			function update () {
+				preload : function () {
 
-			}
+				},
 
+				create : function () {
+
+				},
+
+				update : function () {
+
+				}
+
+			};
+
+    		game.state.add('Game', myGameState, true);
 
 		</script>
 
