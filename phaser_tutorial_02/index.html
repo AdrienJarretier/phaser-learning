@@ -22,15 +22,18 @@ function preload() {
 	game.load.image('ground', 'assets/platform.png');
 	game.load.image('star', 'assets/star.png');
     game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
+    game.load.spritesheet('baddie', 'assets/baddie.png', 32, 32);
 
 }
 
 const PLAYER_HORIZONTAL_SPEED = 200;
 const PLAYER_GRAVITY = 300;
-const STARS_COUNT = 2;
+const STARS_COUNT = 12;
 const STAR_VALUE = 10;
 
-var platforms;
+var platforms; // group
+
+var baddie;
 var player;
 var cursors;
 var stars;
@@ -67,13 +70,26 @@ function create() {
 
 	ledge.body.immovable = true;
 
+	baddie = game.add.sprite(game.world.width - 32, 400-32, 'baddie');
+	game.physics.arcade.enable(baddie);
+
 	// The player and its settings
 	player = game.add.sprite(32, game.world.height - 150, 'dude');
 
 	game.physics.arcade.enable(player);
+	baddie.body.bounce.y = 0.2;
+	baddie.body.gravity.y = PLAYER_GRAVITY;
+	baddie.body.collideWorldBounds = true;
 
-    //  Player physics properties. Give the little guy a slight bounce.
-	player.body.bounce.y = 0.2;
+	baddie.animations.add('left', [0,1], 10, true);
+	baddie.animations.add('right', [2,3], 10, true);
+
+	baddie.body.velocity.x = -PLAYER_HORIZONTAL_SPEED*0.9;
+	baddie.animations.play('left');
+
+    //  Player physics properties.
+ //    // Give the little guy a slight bounce.
+	// player.body.bounce.y = 0.2;
 	player.body.gravity.y = PLAYER_GRAVITY;
 	player.body.collideWorldBounds = true;
 
@@ -112,10 +128,26 @@ function update() {
 
 	game.physics.arcade.collide(player, platforms);
 	game.physics.arcade.collide(stars, platforms);
+	game.physics.arcade.collide(baddie, platforms);
+
+	if ( baddie.body.position.x<400 && baddie.body.velocity.x<0 ) {
+
+		baddie.body.velocity.x *= -1;
+		baddie.animations.play('right');
+
+	}
+	else if ( baddie.body.position.x > 760 && baddie.body.velocity.x > 0 ) {
+
+		baddie.body.velocity.x *= -1;
+		baddie.animations.play('left');
+
+	}
 
 	// Check for an overlap between the player and any star in the stars Group.
 	// If found then pass them to the 'collectStar' function
 	game.physics.arcade.overlap(player, stars, collectStar, null, this);
+
+	game.physics.arcade.overlap(player, baddie, playerDies, null, this);
 
 	player.body.velocity.x = 0;
 
@@ -169,6 +201,16 @@ function collectStar (player, star) {
 		game.paused = true;
 
 	}
+
+}
+
+function playerDies (player, baddie) {
+
+	player.kill();
+
+	var endText = game.add.text(400, 300, 'You got eaten !', { fontSize:'32px', fill: '#000' });
+    endText.anchor.x = 0.5;
+    endText.anchor.y = 0.5;
 
 }
 
