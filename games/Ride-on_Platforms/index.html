@@ -31,6 +31,7 @@
 
 				preload : function () {
 
+            		this.load.image('background', 'assets/background.png');
 					this.load.image('ice-platform', 'assets/ice-platform.png');
 					this.load.image('platform', 'assets/platform.png');
             		this.load.spritesheet('dude', 'assets/dude.png', 32, 48);
@@ -38,6 +39,8 @@
 				},
 
 				create : function () {
+
+					this.add.sprite(0,0,'background');
 
 					this.platforms = this.add.physicsGroup();
 
