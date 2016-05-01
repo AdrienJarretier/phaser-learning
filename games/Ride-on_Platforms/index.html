@@ -13,7 +13,7 @@
 
 			const GRAVITY = 3000;
 			const PLAYER_HORIZONTAL_SPEED = 400;
-			const PLAYER_JUMP_SPEED = 1100;
+			const PLAYER_JUMP_SPEED = 900;
 
 			var game = new Phaser.Game(640, 480, Phaser.AUTO);
 
@@ -46,10 +46,10 @@
 					this.platforms = this.add.physicsGroup();
 
 					// we create 4 platforms
-					this.platforms.create(0, 64, 'ice-platform');
-					this.platforms.create(200, 180, 'platform');
-					this.platforms.create(400, 296, 'ice-platform');
-					this.platforms.create(600, 412, 'platform');
+					this.platforms.create(-600, 64, 'ice-platform');
+					this.platforms.create(-400, 180, 'platform');
+					this.platforms.create(-200, 296, 'ice-platform');
+					this.platforms.create(0, 412, 'platform');
 
 					// prevent the 4 platforms from falling
 					// and set them all to the same horizontal velocity
@@ -88,6 +88,9 @@
 
 		        setFriction : function (player, platform) {
 
+		        	// checks if the platform is an ice one,
+		        	// and if so adjusts the players body
+		        	// to compensate for the distance the platform has travelled.
 		        	if (platform.key === 'ice-platform') {
 
 		        		player.body.x -= platform.body.x - platform.body.prev.x;
