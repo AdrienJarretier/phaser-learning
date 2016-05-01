@@ -25,13 +25,16 @@ function preload() {
 
 }
 
+const PLAYER_HORIZONTAL_SPEED = 200;
+const PLAYER_GRAVITY = 350;
+
 var platforms;
 var player;
 var cursors;
 var stars;
 
-const PLAYER_HORIZONTAL_SPEED = 200;
-const PLAYER_GRAVITY = 350;
+var score = 0;
+var scoreText;
 
 function create() {
 
@@ -98,6 +101,9 @@ function create() {
 
     };
 
+    // displays a text at coordinates 16,16 with a 32px font size in black
+    scoreText = game.add.text(16, 16, 'Score: 0', { fontSize:'32px', fill: '#000' });
+
 }
 
 function update() {
@@ -149,6 +155,9 @@ function collectStar (player, star) {
 
 	// Removes the star from the screen
 	star.kill();
+
+	score += 10;
+	scoreText.text = 'Score: ' + score;
 
 }
 
