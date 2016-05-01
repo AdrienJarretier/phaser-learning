@@ -26,7 +26,9 @@ function preload() {
 }
 
 const PLAYER_HORIZONTAL_SPEED = 200;
-const PLAYER_GRAVITY = 350;
+const PLAYER_GRAVITY = 300;
+const STARS_COUNT = 2;
+const STAR_VALUE = 10;
 
 var platforms;
 var player;
@@ -91,7 +93,7 @@ function create() {
     stars = game.add.group();
     stars.enableBody = true;
 
-    for (var i = 0; i < 12; i++) {
+    for (var i = 0; i < STARS_COUNT; i++) {
 
     	var star = stars.create(i*70, 0, 'star');
 
@@ -156,8 +158,17 @@ function collectStar (player, star) {
 	// Removes the star from the screen
 	star.kill();
 
-	score += 10;
+	score += STAR_VALUE;
 	scoreText.text = 'Score: ' + score;
+
+	if( score == STAR_VALUE * STARS_COUNT ) {
+
+		var endText = game.add.text(400, 300, 'Congrats you collected em all !', { fontSize:'32px', fill: '#000' });
+	    endText.anchor.x = 0.5;
+	    endText.anchor.y = 0.5;
+		game.paused = true;
+
+	}
 
 }
 
