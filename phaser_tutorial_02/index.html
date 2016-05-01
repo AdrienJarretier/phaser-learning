@@ -25,6 +25,9 @@ function preload() {
 
 }
 
+var platforms;
+var player;
+
 function create() {
 
 	// Enable the Arcade Physics system
@@ -33,7 +36,7 @@ function create() {
 	game.add.sprite(0,0,'sky');
 
 	// This group will contain the ground and the 2 ledges we can jump on
-	var platforms = game.add.group();
+	platforms = game.add.group();
 
 	// Enable physics for objects in this group
 	platforms.enableBody = true;
@@ -44,7 +47,7 @@ function create() {
 	ground.scale.setTo(2, 2);
 
 	// This stops the ground from falling away when you jump on it
-	ground.body.immovanle = true;
+	ground.body.immovable = true;
 
 	var ledge = platforms.create(400, 400, 'ground');
 
@@ -55,7 +58,7 @@ function create() {
 	ledge.body.immovable = true;
 
 	// The player and its settings
-	var player = game.add.sprite(32, game.world.height - 150, 'dude');
+	player = game.add.sprite(32, game.world.height - 150, 'dude');
 
 	game.physics.arcade.enable(player);
 
@@ -76,6 +79,9 @@ function create() {
 }
 
 function update() {
+
+	game.physics.arcade.collide(player, platforms);
+
 }
 
 </script>
