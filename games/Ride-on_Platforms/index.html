@@ -15,11 +15,7 @@
 
 			var myGameState = {
 
-				player : null,
 				platforms : null,
-				facing : 'left',
-				jumpTimer : 0,
-				cursors : null,
 
 				init : function () {
 
@@ -27,9 +23,26 @@
 
 				preload : function () {
 
+					this.load.image('ice-platform', 'assets/ice-platform.png');
+					this.load.image('platform', 'assets/platform.png');
+
 				},
 
 				create : function () {
+
+					this.platforms = this.add.physicsGroup();
+
+					// we create 4 platforms
+					this.platforms.create(0, 64, 'ice-platform');
+					this.platforms.create(200, 180, 'platform');
+					this.platforms.create(400, 296, 'ice-platform');
+					this.platforms.create(600, 412, 'platform');
+
+					// prevent the 4 platforms from falling
+					// and set them all to the same horizontal velocity
+					this.platforms.setAll('body.allowGravity', false);
+					this.platforms.setAll('body.immovable', true);
+					this.platforms.setAll('body.velocity.x', 100);
 
 				},
 
