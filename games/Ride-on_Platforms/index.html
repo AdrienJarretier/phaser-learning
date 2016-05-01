@@ -11,8 +11,9 @@
 
 		<script>
 
+			const GRAVITY = 3000;
 			const PLAYER_HORIZONTAL_SPEED = 400;
-			const PLAYER_JUMP_SPEED = 500;
+			const PLAYER_JUMP_SPEED = 1100;
 
 			var game = new Phaser.Game(640, 480, Phaser.AUTO);
 
@@ -25,7 +26,7 @@
 
 		            this.physics.startSystem(Phaser.Physics.ARCADE);
 
-		            this.physics.arcade.gravity.y = 800;
+		            this.physics.arcade.gravity.y = GRAVITY;
 
 				},
 
@@ -85,11 +86,24 @@
 
 		        },
 
+		        setFriction : function (player, platform) {
+
+		        	if (platform.key === 'ice-platform') {
+
+		        		player.body.x -= platform.body.x - platform.body.prev.x;
+
+		        	}
+
+		        },
+
 				update : function () {
 
 					this.platforms.forEach(this.wrapPlatform, this);
 
-					this.physics.arcade.collide(this.player, this.platforms);
+					this.physics.arcade.collide(
+						this.player, this.platforms,
+						this.setFriction, null, this
+					);
 
 		            //  Do this AFTER the collide check, or we won't have blocked/touching set
 		            var standing = this.player.body.blocked.down || this.player.body.touching.down;
