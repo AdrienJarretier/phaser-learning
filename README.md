@@ -8,3 +8,4 @@ The layout of the repository will be very simple, for now just a [nodejs](https:
 ## Test online : 
 
 1. First Phaser game, don't get eaten [there](https://AdrienJarretier.github.io/phaser_tutorial_02)
+2. [Ride the platforms and get to the top](http://adrienjarretier.github.io/Ride-on_Platforms/)
