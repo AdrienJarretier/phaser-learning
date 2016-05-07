@@ -1,7 +1,7 @@
 const GRAVITY = 3000;
 const PLAYER_HORIZONTAL_SPEED = 400;
 
-var game = new Phaser.Game(640, 480, Phaser.AUTO);
+var game = new Phaser.Game(1280, 720, Phaser.AUTO);
 
 var myGameState = {
 
@@ -27,7 +27,12 @@ var myGameState = {
 
 	create : function () {
 
-		this.add.sprite(0,0,'background');
+		var background = this.add.sprite(0,0,'background');
+		background.scale.set(game.height/background.height);
+
+		var background2 = this.add.sprite(background.width,0,'background');
+		background2.anchor.set(1, 0);
+		background2.scale.set(-game.height/background2.height, game.height/background2.height);
 
 		this.player = this.add.sprite(0, 480, 'dude', 4);
 		this.player.anchor.y = 1;
@@ -72,6 +77,13 @@ var myGameState = {
 			this.player.animations.stop();
 
 			this.player.frame = 4;
+
+		}
+
+		if (this.cursors.up.isDown) {
+
+	        //  fly
+	        this.player.body.velocity.y = -PLAYER_HORIZONTAL_SPEED;
 
 		}
 
